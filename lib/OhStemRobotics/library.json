@@ -1,0 +1,20 @@
+{
+  "name": "OhStemRobotics",
+  "version": "0.1.0",
+  "description": "Arduino/PlatformIO robotics library ported from the OhStem Yolo Uno Python extension.",
+  "keywords": [
+    "robotics",
+    "ohstem",
+    "motor",
+    "line follower",
+    "mpu6050",
+    "arduino"
+  ],
+  "repository": {
+    "type": "local",
+    "url": "."
+  },
+  "frameworks": "arduino",
+  "platforms": "*",
+  "headers": "OhStemRobotics.h"
+}
