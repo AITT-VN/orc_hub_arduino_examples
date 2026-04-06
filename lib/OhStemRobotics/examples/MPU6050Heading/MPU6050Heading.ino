@@ -2,6 +2,7 @@
 
 using namespace ohstem::robotics;
 
+// Prints heading, pitch, and roll so users can validate IMU orientation first.
 MPU6050Sensor imu(Wire);
 AngleSensor angleSensor(imu);
 

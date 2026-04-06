@@ -2,6 +2,7 @@
 
 using namespace ohstem::robotics;
 
+// Demonstrates the most common DriveBase moves on a mecanum robot.
 MotorDriverV2 motorDriver(Wire);
 DCMotor motor1(motorDriver, M1);
 DCMotor motor2(motorDriver, M2);

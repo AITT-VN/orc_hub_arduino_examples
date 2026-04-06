@@ -230,20 +230,20 @@ void DCMotor3Pin::brake() {
   analogWrite(pwmPin_, 0);
 }
 
-RobotServo::RobotServo(MotorDriverV2& driver, uint8_t port, int maxAngle)
+ServoMotor::ServoMotor(MotorDriverV2& driver, uint8_t port, int maxAngle)
     : driver_(&driver),
       port_(port),
       maxAngle_(maxAngle > 0 ? (maxAngle == 360 ? 180 : maxAngle) : 180) {
   limitMax_ = maxAngle_;
 }
 
-RobotServo::RobotServo(uint8_t pin, int maxAngle)
+ServoMotor::ServoMotor(uint8_t pin, int maxAngle)
     : outputPin_(pin),
       maxAngle_(maxAngle > 0 ? (maxAngle == 360 ? 180 : maxAngle) : 180) {
   limitMax_ = maxAngle_;
 }
 
-bool RobotServo::begin() {
+bool ServoMotor::begin() {
   if (driver_ != nullptr) {
     return true;
   }
@@ -254,7 +254,7 @@ bool RobotServo::begin() {
   return attached_;
 }
 
-void RobotServo::limit(int minAngle, int maxAngle) {
+void ServoMotor::limit(int minAngle, int maxAngle) {
   if (minAngle < 0 || maxAngle < minAngle || maxAngle > maxAngle_) {
     return;
   }
@@ -262,12 +262,12 @@ void RobotServo::limit(int minAngle, int maxAngle) {
   limitMax_ = maxAngle;
 }
 
-int RobotServo::angleToMicroseconds(int angleValue) const {
+int ServoMotor::angleToMicroseconds(int angleValue) const {
   const float ratio = static_cast<float>(angleValue) / static_cast<float>(maxAngle_);
   return static_cast<int>(500.0f + ratio * 2000.0f);
 }
 
-void RobotServo::setAngle(int angleValue) {
+void ServoMotor::setAngle(int angleValue) {
   angleValue = clampValue(angleValue, limitMin_, limitMax_);
   if (driver_ != nullptr) {
     driver_->setServo(port_, angleValue, maxAngle_);
@@ -277,7 +277,7 @@ void RobotServo::setAngle(int angleValue) {
   currentAngle_ = angleValue;
 }
 
-void RobotServo::runAngle(int angleValue, int speedValue) {
+void ServoMotor::runAngle(int angleValue, int speedValue) {
   angleValue = clampValue(angleValue, limitMin_, limitMax_);
   speedValue = clampValue(speedValue, 0, 100);
 
@@ -300,14 +300,14 @@ void RobotServo::runAngle(int angleValue, int speedValue) {
   }
 }
 
-void RobotServo::runSteps(int steps, int speedValue) {
+void ServoMotor::runSteps(int steps, int speedValue) {
   if (currentAngle_ < 0) {
     currentAngle_ = 0;
   }
   runAngle(currentAngle_ + steps, speedValue);
 }
 
-void RobotServo::spin(int speedValue) {
+void ServoMotor::spin(int speedValue) {
   speedValue = clampValue(speedValue, -100, 100);
   const int angleValue = static_cast<int>(90.0f - (speedValue / 100.0f) * 90.0f);
   setAngle(angleValue);

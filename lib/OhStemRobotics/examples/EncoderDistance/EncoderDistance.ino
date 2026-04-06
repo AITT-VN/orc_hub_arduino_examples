@@ -2,6 +2,7 @@
 
 using namespace ohstem::robotics;
 
+// Shows how encoder feedback improves straight distance moves and turn repeatability.
 MotorDriverV2 motorDriver(Wire);
 DCMotor leftMotor(motorDriver, E1);
 DCMotor rightMotor(motorDriver, E2);

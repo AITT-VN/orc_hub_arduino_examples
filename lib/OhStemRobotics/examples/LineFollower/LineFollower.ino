@@ -2,6 +2,7 @@
 
 using namespace ohstem::robotics;
 
+// Minimal line-following example using the I2C line sensor and DriveBase helper.
 MotorDriverV2 motorDriver(Wire);
 DCMotor leftMotor(motorDriver, E1);
 DCMotor rightMotor(motorDriver, E2);

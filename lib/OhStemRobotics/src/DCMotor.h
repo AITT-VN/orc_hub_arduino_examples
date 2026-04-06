@@ -111,10 +111,11 @@ class DCMotor3Pin : public DCMotorBase {
   int stbyPin_;
 };
 
-class RobotServo {
+// ServoMotor can drive either a MotorDriverV2 servo port or a direct PWM pin.
+class ServoMotor {
  public:
-  RobotServo(MotorDriverV2& driver, uint8_t port, int maxAngle = 180);
-  RobotServo(uint8_t pin, int maxAngle = 180);
+  ServoMotor(MotorDriverV2& driver, uint8_t port, int maxAngle = 180);
+  ServoMotor(uint8_t pin, int maxAngle = 180);
 
   bool begin();
   void limit(int minAngle, int maxAngle);
@@ -138,6 +139,9 @@ class RobotServo {
   int limitMin_ = 0;
   int limitMax_ = 180;
 };
+
+// Keep the old name as an alias so existing sketches still compile.
+using RobotServo = ServoMotor;
 
 }  // namespace robotics
 }  // namespace ohstem

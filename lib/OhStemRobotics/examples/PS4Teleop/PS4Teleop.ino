@@ -2,6 +2,7 @@
 
 using namespace ohstem::robotics;
 
+// Basic teleop example that can use the I2C PS4 receiver or another Gamepad data source.
 MotorDriverV2 motorDriver(Wire);
 DCMotor motor1(motorDriver, M1);
 DCMotor motor2(motorDriver, M2);

@@ -6,6 +6,7 @@ using namespace ohstem::robotics;
 
 MotorDriverV2 mdV2(Wire, MOTOR_DRIVER_ADDR);
 
+// Keep each motor tied to its physical driver port so direction fixes stay easy to follow.
 DCMotor motor1(mdV2, M1, MOTOR_1_REVERSED);
 DCMotor motor2(mdV2, M2, MOTOR_2_REVERSED);
 DCMotor motor3(mdV2, E1, MOTOR_3_REVERSED);
@@ -15,8 +16,8 @@ DCMotor motor5(mdV2, M3, MOTOR_5_REVERSED);
 // Keep the same mapping style as the Python version.
 DriveBase robot(MODE_MECANUM, &motor1, &motor2, &motor3, &motor4);
 
-RobotServo servo1(mdV2, S1, SERVO_1_MAX_ANGLE);
-RobotServo servo2(mdV2, S2, SERVO_2_MAX_ANGLE);
+ServoMotor servo1(mdV2, S1, SERVO_1_MAX_ANGLE);
+ServoMotor servo2(mdV2, S2, SERVO_2_MAX_ANGLE);
 
 PS4GamepadReceiver ps4Receiver(Wire, PS4_RECEIVER_ADDR);
 Gamepad gamepad(&ps4Receiver);
@@ -27,6 +28,7 @@ bool ps4ReceiverReady = false;
 uint32_t lastMotorDriverRetryMs = 0;
 uint32_t lastAuxTaskMs = 0;
 
+// Wait briefly for native USB CDC so the first boot logs are visible in Serial Monitor.
 void waitForSerial(uint32_t timeoutMs = 3000) {
   const uint32_t startMs = millis();
   while (!Serial && (millis() - startMs) < timeoutMs) {
@@ -34,6 +36,7 @@ void waitForSerial(uint32_t timeoutMs = 3000) {
   }
 }
 
+// Run a simple I2C scan at boot to help users confirm board wiring and device addresses.
 void scanI2C() {
   Wire.begin();
 
@@ -61,12 +64,14 @@ void scanI2C() {
   Serial.println();
 }
 
+// Print the active reverse flags so wheel-direction tweaks are easy to verify.
 void printMotorConfig() {
   Serial.printf("Motor reverse: M1=%d M2=%d M3=%d M4=%d M5=%d\r\n",
                 MOTOR_1_REVERSED, MOTOR_2_REVERSED, MOTOR_3_REVERSED,
                 MOTOR_4_REVERSED, MOTOR_5_REVERSED);
 }
 
+// Map shoulder buttons to fixed servo presets for quick mechanism control.
 void onCmdBtnL1() {
   if (!ENABLE_SERVOS) {
     return;
@@ -99,6 +104,7 @@ void onCmdBtnThumbR() {
   motor5.stop();
 }
 
+// Register the extra button actions that sit on top of basic teleop driving.
 void bindTeleopCommands() {
   robot.onTeleopCommand(GamepadButton::L1, onCmdBtnL1);
   robot.onTeleopCommand(GamepadButton::L2, onCmdBtnL2);
@@ -107,6 +113,7 @@ void bindTeleopCommands() {
   robot.onTeleopCommand(GamepadButton::ThumbR, onCmdBtnThumbR);
 }
 
+// Apply the shared geometry, speed, encoder, and servo settings after hardware is ready.
 void setupRobot() {
   motor3.setEncoder(ENCODER_RPM, ENCODER_PPR, ENCODER_GEARS);
   motor4.setEncoder(ENCODER_RPM, ENCODER_PPR, ENCODER_GEARS);
@@ -122,6 +129,7 @@ void setupRobot() {
   }
 }
 
+// Bring up the detected hardware and choose teleop or autonomous mode for the demo.
 bool beginRobot() {
   scanI2C();
 
@@ -155,6 +163,7 @@ bool beginRobot() {
   return true;
 }
 
+// Simple timed movement demo used when teleop is disabled in AppConfig.
 void runAutonomousDemo() {
   Serial.println("Move: forward");
   robot.forwardFor(1.2f, SECOND, BRAKE);
@@ -173,6 +182,7 @@ void runAutonomousDemo() {
   delay(1000);
 }
 
+// Use face buttons for small servo trims and right stick X for the auxiliary motor.
 void updateExtraGamepadActions() {
   if ((millis() - lastAuxTaskMs) < AUX_TASK_INTERVAL_MS) {
     return;
@@ -205,6 +215,7 @@ void updateExtraGamepadActions() {
   }
 }
 
+// Keep teleop working even if the external I2C receiver is missing and BLE feeds GamepadState.
 void updateGamepadTeleop() {
   if (ps4ReceiverReady) {
     gamepad.update();
@@ -216,6 +227,7 @@ void updateGamepadTeleop() {
   delay(10);
 }
 
+// Retry the motor driver instead of freezing the whole app when power or wiring is late.
 void retryMotorDriver() {
   if ((millis() - lastMotorDriverRetryMs) < MOTOR_DRIVER_RETRY_MS) {
     delay(50);

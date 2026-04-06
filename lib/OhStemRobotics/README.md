@@ -8,7 +8,7 @@ Arduino/PlatformIO port of the original `yolouno_extension_robotics` MicroPython
 
 - `MotorDriverV1`, `MotorDriverV2`
 - `DCMotor`, `DCMotor2Pin`, `DCMotor3Pin`
-- `RobotServo`
+- `ServoMotor`
 - `LineSensor2P`, `LineSensor3P`, `LineSensorI2C`
 - `DriveBase`
 - `Gamepad`, `PS4GamepadReceiver`
@@ -31,8 +31,8 @@ These are the main building blocks included in the library.
 - `DCMotor.run_time(...)` -> `DCMotor::runTime(...)`
 - `DCMotor.run_angle(...)` -> `DCMotor::runAngle(...)`
 - `DCMotor.run_rotation(...)` -> `DCMotor::runRotation(...)`
-- `Servo.run_angle(...)` -> `RobotServo::runAngle(...)`
-- `Servo.run_steps(...)` -> `RobotServo::runSteps(...)`
+- `Servo.run_angle(...)` -> `ServoMotor::runAngle(...)`
+- `Servo.run_steps(...)` -> `ServoMotor::runSteps(...)`
 - `DriveBase.forward_for(...)` -> `DriveBase::forwardFor(...)`
 - `DriveBase.turn_left_for(...)` -> `DriveBase::turnLeftFor(...)`
 - `DriveBase.follow_line_until_cross(...)` -> `DriveBase::followLineUntilCross(...)`
@@ -93,7 +93,7 @@ Bản port cho Arduino/PlatformIO của runtime MicroPython `yolouno_extension_r
 
 - `MotorDriverV1`, `MotorDriverV2`
 - `DCMotor`, `DCMotor2Pin`, `DCMotor3Pin`
-- `RobotServo`
+- `ServoMotor`
 - `LineSensor2P`, `LineSensor3P`, `LineSensorI2C`
 - `DriveBase`
 - `Gamepad`, `PS4GamepadReceiver`
@@ -116,8 +116,8 @@ Bản port cho Arduino/PlatformIO của runtime MicroPython `yolouno_extension_r
 - `DCMotor.run_time(...)` -> `DCMotor::runTime(...)`
 - `DCMotor.run_angle(...)` -> `DCMotor::runAngle(...)`
 - `DCMotor.run_rotation(...)` -> `DCMotor::runRotation(...)`
-- `Servo.run_angle(...)` -> `RobotServo::runAngle(...)`
-- `Servo.run_steps(...)` -> `RobotServo::runSteps(...)`
+- `Servo.run_angle(...)` -> `ServoMotor::runAngle(...)`
+- `Servo.run_steps(...)` -> `ServoMotor::runSteps(...)`
 - `DriveBase.forward_for(...)` -> `DriveBase::forwardFor(...)`
 - `DriveBase.turn_left_for(...)` -> `DriveBase::turnLeftFor(...)`
 - `DriveBase.follow_line_until_cross(...)` -> `DriveBase::followLineUntilCross(...)`

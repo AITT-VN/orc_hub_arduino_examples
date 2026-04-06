@@ -2,6 +2,7 @@
 
 using namespace ohstem::robotics;
 
+// Uses an MPU6050 and AngleSensor to make turn commands more accurate.
 MotorDriverV2 motorDriver(Wire);
 DCMotor leftMotor(motorDriver, E1);
 DCMotor rightMotor(motorDriver, E2);

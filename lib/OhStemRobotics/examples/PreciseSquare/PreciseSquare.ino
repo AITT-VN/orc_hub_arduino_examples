@@ -2,6 +2,7 @@
 
 using namespace ohstem::robotics;
 
+// Combines encoder distance control with gyro turns to drive a repeatable square path.
 MotorDriverV2 motorDriver(Wire);
 DCMotor leftMotor(motorDriver, E1);
 DCMotor rightMotor(motorDriver, E2);
