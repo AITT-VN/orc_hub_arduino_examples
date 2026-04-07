@@ -1,0 +1,22 @@
+{
+  "name": "OhStemRobotics",
+  "version": "0.2.0",
+  "description": "Robotics library for Arduino IDE and PlatformIO with lesson-style robot examples.",
+  "keywords": [
+    "robotics",
+    "ohstem",
+    "motor",
+    "line follower",
+    "gamepad",
+    "servo",
+    "mpu6050",
+    "arduino"
+  ],
+  "repository": {
+    "type": "local",
+    "url": "."
+  },
+  "frameworks": "arduino",
+  "platforms": "*",
+  "headers": "OhStemRobotics.h"
+}
